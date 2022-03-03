@@ -1,0 +1,119 @@
+#c computes conjugacy classes of subgroups
+c:=function(n,G)
+	cc:=ConjugacyClassesSubgroups(G);
+	return ConjugateSubgroups(G,Representative(cc[n]));
+	end;;
+
+#computes whether a subgroup H is in K
+H_in_K:=function(H,K)
+	local i;
+	for i in H do
+		if i in K then
+			continue;
+		else
+			return 0;
+		fi;
+	od;
+	return 1;
+end;;
+
+#computes whether a conjugacy class C_i is in C_j
+f:=function(C_i,C_j)
+	local i;
+	H_1:=C_i[1];
+	for i in C_j do
+		if H_in_K(H_1,i)=1 then
+			return 1;
+		fi;
+	od;
+	return 0;
+end;;	
+
+#computes each row of the zeta function for the conjugacy classes of G
+row_conj:=function(i,G)
+	local list,j;
+	list:=[ ];
+	j:=1;
+	while j<=Size(ConjugacyClassesSubgroups(G)) do
+		Add(list,f(c(i,G),c(j,G)));
+		j:=j+1;
+	od;
+	return list;
+end;;
+
+#puts each row together into a matrix
+zeta_conj:=function(G)
+	local i, zeta_mat;
+	zeta_mat:=[ ];
+	i:=1;
+	while i<=Size(ConjugacyClassesSubgroups(G)) do
+		Add(zeta_mat,row_conj(i,G));
+		i:=i+1;
+	od;
+	return zeta_mat;
+end;;
+
+#takes the inverse of the zeta function to compute the mobius function
+mobius_conj:=function(G)
+	local s,mobius_mat;
+	s:=Size(ConjugacyClassesSubgroups(G));
+	mobius_mat:=Inverse(zeta_conj(G));
+	return (mobius_mat[1])[s];
+end;;
+
+#computes subgroups of G	
+sub:=function(G)
+	local list,i;
+	list:=[ ];
+	i:=1;
+	while i<=Size(ConjugacyClassesSubgroups(G)) do
+		Append(list, c(i,G));
+		i:=i+1;
+	od;
+	return list;
+end;;
+
+#computes the rows of the zeta function matrix for subgroups
+row_sub:=function(i,G)
+	local list,j;
+	list:=[ ];
+	for j in sub(G) do
+		Add(list,H_in_K(sub(G)[i],j));
+	od;
+	return list;
+end;;
+
+#puts these together to create the zeta matrix
+zeta_sub:=function(G)
+	local i, zeta_mat;
+	zeta_mat:=[ ];
+	i:=1;
+	while i<=Size(sub(G)) do
+		Add(zeta_mat,row_sub(i,G));
+		i:=i+1;
+	od;
+	return zeta_mat;
+end;;
+
+#takes inverse to compute mobius function
+mobius_sub:=function(G)
+	local s,mobius_mat;
+	s:=Size(sub(G));
+	mobius_mat:=Inverse(zeta_sub(G));
+	return (mobius_mat[1])[s];
+end;;
+
+#computes the size of the derived subgroup
+d_sub:=function(G)
+	return Size(DerivedSubgroup(G));
+end;;
+
+#checks whether mobius_s(G)=G'*mobius_c(G)
+check:=function(G)
+	if mobius_sub(G)=d_sub(G)*mobius_conj(G) then
+		return true;
+	else
+		return false;
+	fi;
+end;;
+
