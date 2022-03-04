@@ -6,15 +6,11 @@ c:=function(n,G)
 
 #computes whether a subgroup H is in K
 H_in_K:=function(H,K)
-	local i;
-	for i in H do
-		if i in K then
-			continue;
-		else
-			return 0;
-		fi;
-	od;
-	return 1;
+	if IsSubgroup(K,H)=true then
+		return 1;
+	else
+		return 0;
+	fi;
 end;;
 
 #computes whether a conjugacy class C_i is in C_j
