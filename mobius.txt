@@ -71,9 +71,10 @@ end;;
 
 #computes the rows of the zeta function matrix for subgroups
 row_sub:=function(i,G)
-	local list,j;
+	local list,j,sub_g;
 	list:=[ ];
-	for j in sub(G) do
+	sub_g:=sub(G)
+	for j in sub_g do
 		Add(list,H_in_K(sub(G)[i],j));
 	od;
 	return list;
@@ -81,10 +82,11 @@ end;;
 
 #puts these together to create the zeta matrix
 zeta_sub:=function(G)
-	local i, zeta_mat;
+	local i, zeta_mat,size_sub;
+	size_sub:=Size(sub(G));
 	zeta_mat:=[ ];
 	i:=1;
-	while i<=Size(sub(G)) do
+	while i<=size_sub do
 		Add(zeta_mat,row_sub(i,G));
 		i:=i+1;
 	od;
