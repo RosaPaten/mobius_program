@@ -73,7 +73,7 @@ end;;
 row_sub:=function(i,G)
 	local list,j,sub_g;
 	list:=[ ];
-	sub_g:=sub(G)
+	sub_g:=sub(G);
 	for j in sub_g do
 		Add(list,H_in_K(sub(G)[i],j));
 	od;
