@@ -1,5 +1,6 @@
 #c computes conjugacy classes of subgroups
 c:=function(n,G)
+	local cc;
 	cc:=ConjugacyClassesSubgroups(G);
 	return ConjugateSubgroups(G,Representative(cc[n]));
 	end;;
@@ -27,10 +28,11 @@ end;;
 
 #computes each row of the zeta function for the conjugacy classes of G
 row_conj:=function(i,G)
-	local list,j;
+	local list,j,cc;
 	list:=[ ];
 	j:=1;
-	while j<=Size(ConjugacyClassesSubgroups(G)) do
+	cc:=Size(ConjugacyClassesSubgroups(G));
+	while j<=cc do
 		Add(list,f(c(i,G),c(j,G)));
 		j:=j+1;
 	od;
@@ -39,10 +41,11 @@ end;;
 
 #puts each row together into a matrix
 zeta_conj:=function(G)
-	local i, zeta_mat;
+	local i, zeta_mat,cc;
 	zeta_mat:=[ ];
 	i:=1;
-	while i<=Size(ConjugacyClassesSubgroups(G)) do
+	cc:=Size(ConjugacyClassesSubgroups(G));
+	while i<=cc do
 		Add(zeta_mat,row_conj(i,G));
 		i:=i+1;
 	od;
@@ -59,10 +62,11 @@ end;;
 
 #computes subgroups of G	
 sub:=function(G)
-	local list,i;
+	local list,i,cc;
 	list:=[ ];
 	i:=1;
-	while i<=Size(ConjugacyClassesSubgroups(G)) do
+	cc:=Size(ConjugacyClassesSubgroups(G));
+	while i<=cc do
 		Append(list, c(i,G));
 		i:=i+1;
 	od;
@@ -75,7 +79,7 @@ row_sub:=function(i,G)
 	list:=[ ];
 	sub_g:=sub(G);
 	for j in sub_g do
-		Add(list,H_in_K(sub(G)[i],j));
+		Add(list,H_in_K(sub_g[i],j));
 	od;
 	return list;
 end;;
