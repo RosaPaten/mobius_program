@@ -28,12 +28,13 @@ end;;
 
 #computes each row of the zeta function for the conjugacy classes of G
 row_conj:=function(i,G)
-	local list,j,cc;
+	local list,j,cc,cc_sub;
 	list:=[ ];
 	j:=1;
 	cc:=Size(ConjugacyClassesSubgroups(G));
+	cc_sub:=c(i,G);
 	while j<=cc do
-		Add(list,f(c(i,G),c(j,G)));
+		Add(list,f(cc_sub,c(j,G)));
 		j:=j+1;
 	od;
 	return list;
