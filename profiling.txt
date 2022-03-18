@@ -1,0 +1,10 @@
+ProfileFunctions([c,H_in_K,f,row_conj,zeta_conj,mobius_conj,sub,row_sub,zeta_sub,mobius_sub,d_sub,check]);
+
+#supply G before pasting
+check(SymmetricGroup(G));
+
+UnprofileFunctions([c,H_in_K,f,row_conj,zeta_conj,mobius_conj,sub,row_sub,zeta_sub,mobius_sub,d_sub,check]);
+
+DisplayProfile();
+
+  
