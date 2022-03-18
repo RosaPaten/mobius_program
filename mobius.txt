@@ -88,7 +88,7 @@ end;;
 #puts these together to create the zeta matrix
 zeta_sub:=function(G)
 	local i, zeta_mat,size_sub;
-	size_sub:=Size(sub(G));
+	size_sub:=Size(G);
 	zeta_mat:=[ ];
 	i:=1;
 	while i<=size_sub do
@@ -101,7 +101,7 @@ end;;
 #takes inverse to compute mobius function
 mobius_sub:=function(G)
 	local s,mobius_mat;
-	s:=Size(sub(G));
+	s:=Size(G);
 	mobius_mat:=Inverse(zeta_sub(G));
 	return (mobius_mat[1])[s];
 end;;
