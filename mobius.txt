@@ -16,7 +16,7 @@ end;;
 
 #computes whether a conjugacy class C_i is in C_j
 f:=function(C_i,C_j)
-	local i;
+	local i,H_1;
 	H_1:=C_i[1];
 	for i in C_j do
 		if H_in_K(H_1,i)=1 then
