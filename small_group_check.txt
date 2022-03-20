@@ -9,6 +9,17 @@ check_non_solvable:=function(n)
   od;
   return list;
 end;;
+
+check_all:=function(m,n)
+  local i,list;
+  list:=[];
+  for i in [m..n] do
+    Add(list,check_non_solvable(i));
+  od;
+  return list;
+end;;
+  
+    
     
  
       
