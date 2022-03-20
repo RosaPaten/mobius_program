@@ -1,23 +1,30 @@
-check_non_solvable:=function(n)
-  local i,list,small_groups;
+non_solvable_groups:=function(m,n)
+  local i,list,small_groups,j;
   list:=[];
-  small_groups:=AllSmallGroups(n);
-  for i in small_groups do
-    if IsSolvable(i)=false then
-      Add(list,check(i));
-    fi;
+  for i in [m..n] do
+    small_groups:=AllSmallGroups(i);
+    for j in small_groups do
+      if IsSolvable(j)=false then
+        Add(list,j);
+      fi;
+    od;
   od;
   return list;
 end;;
 
 check_all:=function(m,n)
-  local i,list;
+  local i,list,non_solvable;
   list:=[];
-  for i in [m..n] do
-    Add(list,check_non_solvable(i));
+  non_solvable:=non_solvable_groups(m,n);
+  for i in non_solvable do
+    Add(list,check(i));
   od;
   return list;
 end;;
+
+
+
+
   
     
     
