@@ -1,0 +1,14 @@
+check_non_solvable:=function(n)
+  local i,list,small_groups;
+  list:=[];
+  small_groups:=AllSmallGroups(n);
+  for i in small_groups do
+    if IsSolvable(i)=false then
+      Add(list,check(i));
+    fi;
+  od;
+  return list;
+end;;
+    
+ 
+      
