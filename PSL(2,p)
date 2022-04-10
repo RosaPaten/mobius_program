@@ -13,3 +13,7 @@ check_psl:=function(p1,p2)
     od;
     return [list_conj, list_sub, list_check];
 end;;
+
+psl:=function(p)
+    return [mobius_conj(PSL(2,p)), mobius_sub(PSL(2,p)), check(PSL(2,p))];
+end;;
