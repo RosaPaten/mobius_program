@@ -1,0 +1,9 @@
+#this program is recursive
+#some kind of leveling system: for the values on a certain level, take the negative of the value before hand and multiply by the number on that level.
+#have some kind of dictionary to store values
+
+mobius:=function(G)
+  local x0;
+  x0:=1;
+  
+  
