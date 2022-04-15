@@ -2,8 +2,24 @@
 #some kind of leveling system: for the values on a certain level, take the negative of the value before hand and multiply by the number on that level.
 #have some kind of dictionary to store values
 
+#algorithm:
+#find all subgroups
+#1. take x0
+#2. find out the number on the next level, multiply by this number -1 and add it to x0=x1
+#3. multiply this by -1
+#4. set x0=this new number
+#5. return mobius(newlevel)
+
 mobius:=function(G)
-  local x0;
-  x0:=1;
+  sub:=sub(G);
+  if G=e then
+    return 1;
+  fi;
+  elif Size(sub(G))=2 then
+    return -1;
+  fi;
+  else
+    return -1(mob
+  
   
   
