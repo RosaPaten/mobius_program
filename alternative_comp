@@ -3,12 +3,10 @@
 #have some kind of dictionary to store values
 
 #algorithm:
-#find all subgroups
-#1. take x0
-#2. find out the number on the next level, multiply by this number -1 and add it to x0=x1
-#3. multiply this by -1
-#4. set x0=this new number
-#5. return mobius(newlevel)
+#1. if G=e, return 1
+#2. if Size(sub(G))=2, return -1
+#3. for i in subgroups
+#
 
 mobius:=function(G)
   sub:=sub(G);
@@ -19,6 +17,8 @@ mobius:=function(G)
     return -1;
   fi;
   else
+    for i in sub do
+    
     return -1(mob
   
   
