@@ -2,12 +2,12 @@ mobius:=function(G)
   local s,i,subG;
   subG:=sub(G);
   s:=Size(subG);
-  if G=e then
+  if Size(subG)=1 then
     return 1;
-  elif Size(sub(G))=2 then
+  elif Size(subG)=2 then
     return -1;
   else
-    for i in Reversed([2...s-1]) do
+    for i in Reversed([2..s-1]) do
       return -1*(mobius(subG[i])+mobius(subG[i-1]));
     od;
   fi;
