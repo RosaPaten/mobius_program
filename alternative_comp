@@ -1,25 +1,17 @@
-#this program is recursive
-#some kind of leveling system: for the values on a certain level, take the negative of the value before hand and multiply by the number on that level.
-#have some kind of dictionary to store values
-
-#algorithm:
-#1. if G=e, return 1
-#2. if Size(sub(G))=2, return -1
-#3. for i in subgroups
-#
-
 mobius:=function(G)
-  sub:=sub(G);
+  local s,i,subG;
+  subG:=sub(G);
+  s:=Size(subG);
   if G=e then
     return 1;
-  fi;
   elif Size(sub(G))=2 then
     return -1;
-  fi;
   else
-    for i in sub do
-    
-    return -1(mob
+    for i in Reversed([2...s-1]) do
+      return -1*(mobius(subG[i])+mobius(subG[i-1]));
+    od;
+  fi;
+end;;
   
   
   
