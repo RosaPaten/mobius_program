@@ -1,15 +1,52 @@
-mobius:=function(G)
-  local s,i,subG;
+c:=function(n,G)
+	local cc;
+	cc:=ConjugacyClassesSubgroups(G);
+	return ConjugateSubgroups(G,Representative(cc[n]));
+	end;;
+  
+sub:=function(G)
+	local list,i,cc;
+	list:=[ ];
+	i:=1;
+	cc:=Size(ConjugacyClassesSubgroups(G));
+	while i<=cc do
+		Append(list, c(i,G));
+		i:=i+1;
+	od;
+	return list;
+end;;
+
+Tlevel:=function(G)
+  local H,K,subG,sum,list; 
+  list:=[];
   subG:=sub(G);
-  s:=Size(subG);
+  for H in subG do
+    sum:=0;
+	  for K in subG do
+		  if IsSubgroup(K,H)=true then
+			  sum:=sum+1;
+		  elif IsSubgroup(K,H)=false then
+			  sum:=sum;
+      fi;
+    od;
+    if sum=2 then
+	    Add(list,H);
+    fi;
+  od;
+  return list;
+end;;
+
+
+mobius:=function(G)
+  local i,subG,T;
+  subG:=sub(G);
+  T:=Tlevel(G);
   if Size(subG)=1 then
     return 1;
   elif Size(subG)=2 then
     return -1;
   else
-    for i in Reversed([2..s-1]) do
-      return -1*(mobius(subG[i])+mobius(subG[i-1]));
-    od;
+    return -1*Sum(List(T,mobius));
   fi;
 end;;
   
