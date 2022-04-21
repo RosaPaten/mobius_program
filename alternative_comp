@@ -41,13 +41,13 @@ end;;
 
 #computes the 2nd level of the subgroup lattice of G
 T2level:=function(G)
+	local list,T;
 	T:=Tlevel(G);
-	list1:=[];
-	list2:=[];
+	list:=[];
 	for i in T do
-		list2:=Set(Add(list2,Tlevel(i)));
+		list:=Set(Add(list,Tlevel(i)));
 	od;
-	return list 2;
+	return list;
 end;
 		
 #computes the mobius function of G recursively
@@ -57,10 +57,10 @@ mobius:=function(G)
   T:=Tlevel(G);
   T2:=T2level(G);
   #base case
-  if Size(subG)=0 then
+  if Size(G)=0 then
     return 0;
   #second case
-  elif Size(subG)=1 then
+  elif Size(G)=1 then
     return 1;
   else
   #can think of this as -1(mobius(level1)+mobius(level2)) 
