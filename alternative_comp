@@ -1,9 +1,11 @@
+#computes the conjugacy classes of G
 c:=function(n,G)
 	local cc;
 	cc:=ConjugacyClassesSubgroups(G);
 	return ConjugateSubgroups(G,Representative(cc[n]));
 	end;;
   
+#computes the subgroups of G
 sub:=function(G)
 	local list,i,cc;
 	list:=[ ];
@@ -16,6 +18,7 @@ sub:=function(G)
 	return list;
 end;;
 
+#computes the first "level" of the subgroup lattice of G
 Tlevel:=function(G)
   local H,K,subG,sum,list; 
   list:=[];
@@ -27,8 +30,8 @@ Tlevel:=function(G)
 			  sum:=sum+1;
 		  elif IsSubgroup(K,H)=false then
 			  sum:=sum;
-      fi;
-    od;
+      		  fi;
+          od;
     if sum=2 then
 	    Add(list,H);
     fi;
@@ -36,19 +39,36 @@ Tlevel:=function(G)
   return list;
 end;;
 
-
+#computes the 2nd level of the subgroup lattice of G
+T2level:=function(G)
+	T:=Tlevel(G);
+	list1:=[];
+	list2:=[];
+	for i in T do
+		list2:=Set(Add(list2,Tlevel(i)));
+	od;
+	return list 2;
+end;
+		
+#computes the mobius function of G recursively
 mobius:=function(G)
-  local i,subG,T;
+  local i,subG,T,T2;
   subG:=sub(G);
   T:=Tlevel(G);
+  T2:=T2level(G);
+  #base case
   if Size(subG)=1 then
     return 1;
+  #second case
   elif Size(subG)=2 then
     return -1;
   else
-    return -1*Sum(List(T,mobius));
+  #can think of this as -1(mobius(level1)+mobius(level2)) 
+    return -1*(Sum(List(T,mobius))+Sum(List(T2,mobius)));
   fi;
 end;;
+
+
   
   
   
