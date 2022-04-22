@@ -1,3 +1,6 @@
+#file
+write file in here
+
 #computes the conjugacy classes of G
 c:=function(n,G)
 	local cc;
@@ -28,7 +31,9 @@ mobius:=function(G)
   #second case
   elif Size(G)=1 then
     return 1;
+  #if in file, take that value
   else
+    #add mobius to file
     return -1*(Sum(List(subG,mobius)));
   fi;
 end;;
