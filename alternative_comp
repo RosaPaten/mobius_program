@@ -11,51 +11,17 @@ sub:=function(G)
 	list:=[ ];
 	i:=1;
 	cc:=Size(ConjugacyClassesSubgroups(G));
-	while i<=cc do
+	while i<cc do
 		Append(list, c(i,G));
 		i:=i+1;
 	od;
 	return list;
 end;;
-
-#computes the first "level" of the subgroup lattice of G
-Tlevel:=function(G)
-  local H,K,subG,sum,list; 
-  list:=[];
-  subG:=sub(G);
-  for H in subG do
-    sum:=0;
-	  for K in subG do
-		  if IsSubgroup(K,H)=true then
-			  sum:=sum+1;
-		  elif IsSubgroup(K,H)=false then
-			  sum:=sum;
-      		  fi;
-          od;
-    if sum=2 then
-	    Add(list,H);
-    fi;
-  od;
-  return list;
-end;;
-
-#computes the 2nd level of the subgroup lattice of G
-T2level:=function(G)
-	local list,T;
-	T:=Tlevel(G);
-	list:=[];
-	for i in T do
-		list:=Set(Add(list,Tlevel(i)));
-	od;
-	return list;
-end;
 		
 #computes the mobius function of G recursively
 mobius:=function(G)
-  local i,subG,T,T2;
+  local subG;
   subG:=sub(G);
-  T:=Tlevel(G);
-  T2:=T2level(G);
   #base case
   if Size(G)=0 then
     return 0;
@@ -63,8 +29,7 @@ mobius:=function(G)
   elif Size(G)=1 then
     return 1;
   else
-  #can think of this as -1(mobius(level1)+mobius(level2)) 
-    return -1*(Sum(List(T,mobius))+Sum(List(T2,mobius)));
+    return -1*(Sum(List(subG,mobius)));
   fi;
 end;;
 
