@@ -1,5 +1,5 @@
 #file
-write file in here
+#write file in here
 
 #computes the conjugacy classes of G
 c:=function(n,G)
@@ -40,13 +40,13 @@ end;;
 
 mobius_conj:=function(G)
 	local cc;
-	cc:=Unbind\[\](ConjugacyClassesSubgroups(G),Size(ConjugacyClassesSubgroup(G)));
+	cc:=Unbind\[\](ConjugacyClassesSubgroups(G),Size(ConjugacyClassesSubgroups(G)));
 	if Size(cc)=0 then
 		return 0;
 	elif Size(cc)=1 then
 		return 1;
 	else
-		return -1*Sum(List(cc,mobius)));
+		return -1*(Sum(List(cc,mobius)));
 	fi;
 end;;
 	
