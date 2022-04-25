@@ -1,4 +1,6 @@
 #file
+path:=DirectoryCurrent();
+Filename(path,"mobius_values");
 #write file in here
 
 #computes the conjugacy classes of G
@@ -61,6 +63,15 @@ mobius_conj:=function(G)
 	fi;
 end;;
 	
+local a;
+
+if a:=e
+	return 1
+elif...
+
+fi;
+
+end;;
 
   
   
