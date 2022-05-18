@@ -63,16 +63,5 @@ mobius_conj:=function(G)
 	fi;
 end;;
 	
-local a;
 
-if a:=e
-	return 1
-elif...
-
-fi;
-
-end;;
-
-  
-  
   
