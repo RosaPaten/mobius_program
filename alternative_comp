@@ -1,3 +1,4 @@
+mobius_values:=NewDictionary(1,true);
 #computes the conjugacy classes of G
 c:=function(n,G)
 	local cc;
@@ -28,6 +29,8 @@ mobius:=function(G)
   #second case
   elif Size(G)=1 then
     return 1;
+  elif KnowsDictionary(mobius_values,G)=true then
+    return LookupDictionary(mobius_values,G);
   else
     return -1*(Sum(List(subG,mobius)));
   fi;
