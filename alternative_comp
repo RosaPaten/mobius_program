@@ -25,11 +25,7 @@ end;;
 mobius:=function(G)
   local subG,i;
   subG:=sub(G);
-  #base case
-  if Size(G)=0 then
-    return 0;
-  #second case
-  elif Size(G)=1 then
+  if Size(G)=1 then
     return 1;
   elif KnowsDictionary(mobius_values,G)=true then
     return LookupDictionary(mobius_values,G);
