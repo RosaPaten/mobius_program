@@ -23,7 +23,7 @@ end;;
 		
 #computes the mobius function of G recursively
 mobius:=function(G)
-  local subG;
+  local subG,i;
   subG:=sub(G);
   #base case
   if Size(G)=0 then
@@ -34,7 +34,9 @@ mobius:=function(G)
   elif KnowsDictionary(mobius_values,G)=true then
     return LookupDictionary(mobius_values,G);
   else
-    return -1*(Sum(List(subG,mobius)));
+    i:=-1*(Sum(List(subG,mobius)));
+    AddDictionary(mobius_values,G,i);
+    return i;
   fi;
 end;;
 
