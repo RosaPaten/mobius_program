@@ -1,5 +1,5 @@
 #file
-path:=DirectoryCurrent();
+path:=DirectoryTemporary();
 Filename(path,"mobius_values");
 #write file in here
 
