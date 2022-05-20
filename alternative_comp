@@ -1,14 +1,9 @@
-#file
-path:=DirectoryTemporary();
-Filename(path,"mobius_values");
-#write file in here
-
 #computes the conjugacy classes of G
 c:=function(n,G)
 	local cc;
 	cc:=ConjugacyClassesSubgroups(G);
 	return ConjugateSubgroups(G,Representative(cc[n]));
-	end;;
+end;;
   
 #computes the subgroups of G
 sub:=function(G)
@@ -33,9 +28,7 @@ mobius:=function(G)
   #second case
   elif Size(G)=1 then
     return 1;
-  #if in file, take that value
   else
-    #add mobius to file
     return -1*(Sum(List(subG,mobius)));
   fi;
 end;;
