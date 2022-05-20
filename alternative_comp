@@ -1,4 +1,4 @@
-#creates dictionary
+#creates dictionary to store values
 mobius_values:=NewDictionary(1,true);
 
 #computes the conjugacy classes of G
