@@ -4,21 +4,21 @@ mobius_values:=NewDictionary(1,true);
 #computes the conjugacy classes of G
 c:=function(n,G)
 	local cc;
-	cc:=ConjugacyClassesSubgroups(G);
-	return ConjugateSubgroups(G,Representative(cc[n]));
+  cc:=ConjugacyClassesSubgroups(G);
+  return ConjugateSubgroups(G,Representative(cc[n]));
 end;;
   
 #computes the subgroups of G
 sub:=function(G)
-	local list,i,cc;
-	list:=[ ];
-	i:=1;
-	cc:=Size(ConjugacyClassesSubgroups(G));
-	while i<cc do
-		Append(list, c(i,G));
-		i:=i+1;
-	od;
-	return list;
+  local list,i,cc;
+  list:=[ ];
+  i:=1;
+  cc:=Size(ConjugacyClassesSubgroups(G));
+  while i<cc do
+    Append(list, c(i,G));
+    i:=i+1;
+  od;
+  return list;
 end;;
 		
 #computes the mobius function of G recursively
