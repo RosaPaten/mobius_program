@@ -1,4 +1,6 @@
+#creates dictionary
 mobius_values:=NewDictionary(1,true);
+
 #computes the conjugacy classes of G
 c:=function(n,G)
 	local cc;
@@ -36,28 +38,7 @@ mobius:=function(G)
   fi;
 end;;
 
-cc_sub:=function(G)
-	local cc,list,i;
-	cc:=ShallowCopy(ConjugacyClassesSubgroups(G));
-	Remove(cc);
-	list:=[];
-	for i in cc do
-		Add(list,Representative(i));
-	od;
-	return list;
-end;;
 
-mobius_conj:=function(G)
-	local cc;
-	cc:=cc_sub(G);
-	if Size(G)=0 then
-		return 0;
-	elif Size(G)=1 then
-		return 1;
-	else
-		return -1*(Sum(List(cc,mobius_conj)));
-	fi;
-end;;
 	
 
   
