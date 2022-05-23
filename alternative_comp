@@ -12,7 +12,7 @@ check_isomorphism:=function(G)
 			if IsomorphismGroups(i,G)=fail then
 				continue;
 			else
-				return [1,G];
+				return [1,i];
 			fi;
 		fi;
 	od;
