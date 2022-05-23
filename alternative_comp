@@ -1,6 +1,24 @@
 #creates dictionary to store values
 mobius_values:=NewDictionary(1,true);
 
+#creates a key to access all the groups which are in the dictionary
+keys:=[];
+
+#checks whether or not G is isomorphic to a group in our dictionary 
+check_isomorphism:=function(G)
+	local i;
+	for i in keys do
+		if Size(i)=Size(G) then
+			if IsomorphismGroups(i,G)=fail then
+				continue;
+			else
+				return [1,i];
+			fi;
+		fi;
+	od;
+	return [0,0];
+end;;
+
 #computes the conjugacy classes of G
 c:=function(n,G)
 	local cc;
@@ -23,15 +41,17 @@ end;;
 		
 #computes the mobius function of G recursively
 mobius:=function(G)
-  local subG,i;
+  local subG,i,iso;
   subG:=sub(G);
+  iso:=check_isomorphism(G);
   if Size(G)=1 then
     return 1;
-  elif KnowsDictionary(mobius_values,G)=true then
-    return LookupDictionary(mobius_values,G);
+  elif iso[1]=1 then
+    return LookupDictionary(mobius_values,iso[2]); 
   else
     i:=-1*(Sum(List(subG,mobius)));
     AddDictionary(mobius_values,G,i);
+		Add(keys,G);
     return i;
   fi;
 end;;
