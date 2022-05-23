@@ -19,15 +19,6 @@ check_isomorphism:=function(G)
 	return [0,0];
 end;;
 
-hi:=function(dict)
-local i,list;
-list:=[];
-for i in dict do
-	Add(list,i);
-od;
-return list;
-end;
-
 #computes the conjugacy classes of G
 c:=function(n,G)
 	local cc;
