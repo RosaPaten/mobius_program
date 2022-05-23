@@ -1,0 +1,54 @@
+solvable_groups:=function(m,n)
+  local i,list,small_groups,j;
+  list:=[];
+  for i in [m..n] do
+    small_groups:=AllSmallGroups(i);
+    for j in small_groups do
+      if IsSolvable(j)=true then
+        Add(list,j);
+      fi;
+    od;
+  od;
+  return list;
+end;;
+
+small_groups:=function(m,n)
+  local list,i;
+  list:=[];
+  for i in [m..n] do
+    Add(list,AllSmallGroups(i));
+  od;
+  return list;
+end;;
+
+test1:=function(func,m,n)
+  local sol_g,i;
+  sol_g:=solvable_groups(m,n);
+  for i in sol_g do
+    if func(i)=true then
+      continue;
+    else
+      return fail;
+    fi;
+  od;
+  return 1;
+end;;
+
+test2:=function(func,tfunc,m,n)
+  local small_g,i;
+  small_g:=small_groups(m,n);
+  for i in small_g do
+    if func(i)=tfunc(i)
+      continue;
+    else
+      return fail;
+    fi;
+  od;
+  return 1;
+end;;
+  
+     
+    
+    
+  
+  
