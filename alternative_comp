@@ -43,11 +43,11 @@ end;;
 mobius:=function(G)
   local subG,i,iso;
   subG:=sub(G);
-	iso:=check_isomorphism(G);
+  iso:=check_isomorphism(G);
   if Size(G)=1 then
     return 1;
-	elif iso[1]=1 then
-		return LookupDictionary(mobius_values,iso[2]); 
+  elif iso[1]=1 then
+    return LookupDictionary(mobius_values,iso[2]); 
   else
     i:=-1*(Sum(List(subG,mobius)));
     AddDictionary(mobius_values,G,i);
