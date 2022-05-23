@@ -1,0 +1,13 @@
+#creates file to add dictionary to
+path:=DirectoryDesktop();
+Filename(path,mobius_file);
+
+#adds dictionary
+PrintTo(mobius_file,"return"," ",[mobius_values,key];);
+
+#reads as a function
+mobius_values:=ReadAsFunction(mobius_file)[1];
+key:=ReadAsFunction(mobius_file)[2];
+
+
+
