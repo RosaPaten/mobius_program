@@ -46,15 +46,28 @@ mobius:=function(G)
   iso:=check_isomorphism(G);
   if Size(G)=1 then
     return 1;
+  #checks if G is actually in the dictionary
+  elif KnowsDictionary(mobius_values,G)=true then
+    return LookupDictionary(mobius_values,G);
+  iso:=check_isomorphism(G);
+  #checks whether G is isomorphic to a subgroup in the dictionary
   elif iso[1]=1 then
-    return LookupDictionary(mobius_values,iso[2]); 
+    i:=LookupDictionary(mobius_values,iso[2]); 
+    AddDictionary(mobius_values,G,i);
+    Add(keys,G);
+    return i;
+  #if G is not in dict, this actually computes the mobius value
   else
     i:=-1*(Sum(List(subG,mobius)));
     AddDictionary(mobius_values,G,i);
-		Add(keys,G);
+    Add(keys,G);
     return i;
   fi;
 end;;
+
+
+
+
 
 
 	
