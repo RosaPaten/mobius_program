@@ -1,13 +1,42 @@
+#finds the mobius values in the dictionary in order
+values:=function(dict,keys)
+  local i,list;
+  list:=[];
+  for i in keys do
+    Add(list,LookupDictionary(dict,i));
+  od;
+  return list;
+end;;
+
+#creates a dictionary from two equal sized lists
+dictionary:=function(keys,values)
+  local i,s,dict;
+  dict:=NewDictionary(1,true);
+  s:=Size(keys);
+  for i in [1..s] do
+    AddDictionary(dict,keys[i],values[i]);
+  od;
+  return dict;
+end;;
+
+#creates values
+m_values:=values(mobius_values,keys);
+
 #creates file to add dictionary to
 path:=DirectoryDesktop();
-Filename(path,mobius_file);
+mobius_file:=Filename(path,"mobius_file");
 
 #adds dictionary
-PrintTo(mobius_file,"return"," ",[mobius_values,key];);
+PrintTo(mobius_file,"return"," ",[keys,m_values],";");
 
 #reads as a function
-mobius_values:=ReadAsFunction(mobius_file)[1];
-key:=ReadAsFunction(mobius_file)[2];
+keys:=ReadAsFunction(mobius_file)()[1];
+m_values:=ReadAsFunction(mobius_file)()[2];
+mobius_values:=dictionary(keys,m_values);
+
+
+    
+    
 
 
 
