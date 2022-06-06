@@ -1,11 +1,6 @@
 #creates dictionary to store values if there is not one already
 mobius_values:=NewDictionary(1,true);
 
-#if there already exists a file of the dictionary
-keys:=ReadAsFunction(mobius_file)()[1];
-m_values:=ReadAsFunction(mobius_file)()[2];
-mobius_values:=dictionary(keys,m_values);
-
 #creates a key to access all the groups which are in the dictionary
 keys:=[];
 
