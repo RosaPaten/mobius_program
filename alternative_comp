@@ -49,7 +49,6 @@ mobius:=function(G)
   #checks if G is actually in the dictionary
   elif KnowsDictionary(mobius_values,G)=true then
     return LookupDictionary(mobius_values,G);
-  iso:=check_isomorphism(G);
   #checks whether G is isomorphic to a subgroup in the dictionary
   elif iso[1]=1 then
     i:=LookupDictionary(mobius_values,iso[2]); 
