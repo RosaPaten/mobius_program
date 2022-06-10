@@ -19,6 +19,7 @@ dictionary:=function(keys,values)
   return dict;
 end;;
 
+#to save the dictionary
 #creates values
 m_values:=values(mobius_values,keys);
 
@@ -29,6 +30,7 @@ mobius_file:=Filename(path,"mobius_file");
 #adds dictionary
 PrintTo(mobius_file,"return"," ",[keys,m_values],";");
 
+#to load the dictionary
 #reads as a function
 keys:=ReadAsFunction(mobius_file)()[1];
 m_values:=ReadAsFunction(mobius_file)()[2];
