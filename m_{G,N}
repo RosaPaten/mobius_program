@@ -1,68 +1,73 @@
-#creates dictionary to store values if there is not one already
-mobius_values:=NewDictionary(1,true);
-
-#creates a key to access all the groups which are in the dictionary
-keys:=[];
-
-#checks whether or not G is isomorphic to a group in our dictionary 
-check_isomorphism:=function(G)
-	local i;
-	for i in keys do
-		if Size(i)=Size(G) then
-			if IsomorphismGroups(i,G)=fail then
-				continue;
-			else
-				return [1,i];
-			fi;
-		fi;
-	od;
-	return [0,0];
-end;;
-
-#computes the conjugacy classes of G
+#c computes conjugacy classes of subgroups
 c:=function(n,G)
 	local cc;
-  cc:=ConjugacyClassesSubgroups(G);
-  return ConjugateSubgroups(G,Representative(cc[n]));
-end;;
-  
-#computes the subgroups of G
-sub:=function(G)
-  local list,i,cc;
-  list:=[ ];
-  i:=1;
-  cc:=Size(ConjugacyClassesSubgroups(G));
-  while i<cc do
-    Append(list, c(i,G));
-    i:=i+1;
-  od;
-  return list;
-end;;
-		
-#computes the mobius function of G recursively
-mobius:=function(G)
-  local subG,i,iso;
-  subG:=sub(G);
-  if Size(G)=1 then
-    return 1;
-  #checks if G is actually in the dictionary
-  elif KnowsDictionary(mobius_values,G)=true then
-    return LookupDictionary(mobius_values,G);
-  #checks whether G is isomorphic to a subgroup in the dictionary
-  fi;
-  iso:=check_isomorphism(G);
-  if iso[1]=1 then
-    i:=LookupDictionary(mobius_values,iso[2]); 
-    AddDictionary(mobius_values,G,i);
-    Add(keys,G);
-    return i;
-  #if G is not in dict, this actually computes the mobius value
-  else
-    i:=-1*(Sum(List(subG,mobius)));
-    AddDictionary(mobius_values,G,i);
-    Add(keys,G);
-    return i;
-  fi;
+	cc:=ConjugacyClassesSubgroups(G);
+	return ConjugateSubgroups(G,Representative(cc[n]));
+	end;;
+
+#computes whether a subgroup H is in K
+H_in_K:=function(H,K)
+	if IsSubgroup(K,H)=true then
+		return 1;
+	else
+		return 0;
+	fi;
 end;;
 
-m:=function(N,G)
+#computes subgroups of G	
+sub:=function(G)
+	local list,i,cc;
+	list:=[ ];
+	i:=1;
+	cc:=Size(ConjugacyClassesSubgroups(G));
+	while i<=cc do
+		Append(list, c(i,G));
+		i:=i+1;
+	od;
+	return list;
+end;;
+
+sub_XG:=function(X,G)
+	local subG,i,list;
+	subG:=sub(G);
+	list:=[];
+	for i in subG do
+		if IsSubgroup(i,X)=true then
+			Add(list, i);
+		fi;
+  od;
+	return list;
+end;;
+
+#computes the rows of the zeta function matrix for subgroups
+row_sub:=function(i,G,sub_g)
+	local list,j;
+	list:=[ ];
+	for j in sub_g do
+		Add(list,H_in_K(sub_g[i],j));
+	od;
+	return list;
+end;;
+
+#puts these together to create the zeta matrix
+zeta_sub:=function(X,G)
+	local i, zeta_mat,size_sub,sub_g;
+	sub_g:=sub_XG(X,G);
+	size_sub:=Size(sub_g);
+	zeta_mat:=[ ];
+	i:=1;
+	while i<=size_sub do
+		Add(zeta_mat,row_sub(i,G,sub_g));
+		i:=i+1;
+	od;
+	return zeta_mat;
+end;;
+
+#takes inverse to compute mobius function
+mobius_sub:=function(X,G)
+	local s,mobius_mat;
+	s:=Size(sub_XG(X,G));
+	mobius_mat:=Inverse(zeta_sub(X,G));
+	return (mobius_mat[1])[s];
+end;;
+
