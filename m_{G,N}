@@ -71,3 +71,51 @@ mobius_sub:=function(X,G)
 	return (mobius_mat[1])[s];
 end;;
 
+product:=function(X,Y)
+	local x,y,list;
+	list:=[];
+	for x in X do
+		for y in Y do
+			Add(list, x*y);
+		od;
+	od;
+	return Set(list);
+end;;
+
+findX:=function(N,G)
+	local list,subG,X;
+	list:=[];
+	subG:=sub(G);
+	for X in subG do
+		if product(X,N)=G then
+			Add(list,X);
+		fi;
+	od;
+	return Set(list);
+end;;
+
+m:=function(N,G)
+	local s,Xset,sum,X;
+	s:=1/Size(G);
+	Xset:=findX(N,G);
+	sum:=0;
+	for X in Xset do
+		sum:=sum+s*Size(X)*mobius_sub(X,G);
+	od;
+	return sum;
+end;;
+	
+isBgroup:=function(G)
+	local N_sub,N;
+	N_sub:=NormalSubgroups(G);
+	for N in N_sub do
+		if m(N,G)=0 then
+			return true;
+		fi;
+	od;
+	return false;
+end;;
+			
+			
+	
+	
