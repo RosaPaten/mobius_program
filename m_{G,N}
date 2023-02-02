@@ -27,6 +27,7 @@ sub:=function(G)
 	return list;
 end;;
 
+#finds subgroups of G from X to G(ie subgroups H of G such that X is a subgroup of H)
 sub_XG:=function(X,G)
 	local subG,i,list;
 	subG:=sub(G);
@@ -63,7 +64,7 @@ zeta_sub:=function(X,G)
 	return zeta_mat;
 end;;
 
-#takes inverse to compute mobius function
+#takes inverse to compute mobius function of subgroups from X to G
 mobius_sub:=function(X,G)
 	local s,mobius_mat;
 	s:=Size(sub_XG(X,G));
@@ -82,6 +83,7 @@ product:=function(X,Y)
 	return Set(list);
 end;;
 
+#finds a set of X such that for some normal subgroup N of G XN=G
 findX:=function(N,G)
 	local list,subG,X;
 	list:=[];
@@ -94,6 +96,7 @@ findX:=function(N,G)
 	return Set(list);
 end;;
 
+#computes m_{G,N}
 m:=function(N,G)
 	local s,Xset,sum,X;
 	s:=1/Size(G);
@@ -104,10 +107,24 @@ m:=function(N,G)
 	od;
 	return sum;
 end;;
-	
-isBgroup:=function(G)
-	local N_sub,N;
+
+#generates non-trivial normal subgroups, probably an easier way to do this
+non_trivial_norm_sub:=function(G)
+	local N,N_sub,list;
 	N_sub:=NormalSubgroups(G);
+	list:=[];
+	for N in N_sub do
+		if Size(N)>1 then
+			Add(list,N);
+		fi;
+	od;
+	return list;
+end;;
+
+#checks whether a group is a b-group
+is_b_group:=function(G)
+	local N_sub,N;
+	N_sub:=non_trivial_norm_sub(G);
 	for N in N_sub do
 		if m(N,G)=0 then
 			return true;
