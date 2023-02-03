@@ -114,7 +114,7 @@ non_trivial_norm_sub:=function(G)
 	N_sub:=NormalSubgroups(G);
 	list:=[];
 	for N in N_sub do
-		if Size(N)>1 then
+		if 1<Size(N) and Size(N)<Size(G) then
 			Add(list,N);
 		fi;
 	od;
