@@ -21,6 +21,26 @@ sub_lattice:=function(G)
    return reverse(lattice);
 end;;
 
+simplify:=function(list)
+  local i,dictionary,G,count,j;
+  count:=1;
+  dictionary:=NewDictionary(1,true);
+  for i in list do
+    G:=list[i][1];
+    if KnowsDictionary(dictionary,G) then
+      list[i][1]=LookupDictionary(dictionary,G);
+    else
+      list[i][1]=[count,Size(G)];
+      AddDictionary(dictionary,
+    fi;
+    for j in list[i][2] do
+      G:=list[i][2][j];
+      if KnowsDictionary(dictionary,G) then
+      list[i][1]=LookupDictionary(dictionary,G);
+      
+      
+    
+
 
   
   
