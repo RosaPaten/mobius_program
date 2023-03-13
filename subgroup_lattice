@@ -1,0 +1,27 @@
+reverse:=function(list)
+  local list_new,i,len;
+  list_new:=[];
+  len:=Size(list);
+  for i in [0..len-1] do
+    Add(list_new,list[len-i]);
+  od;
+  return list_new;
+end;;
+
+sub_lattice:=function(G)
+  local list,i,subgroups,lattice;
+  lattice:=[];
+  subgroups:=sub(G);
+  for i in subgroups do
+    list:=[];
+    Add(list,i);
+    Add(list,MaximalSubgroups(i));
+    Add(lattice,list);
+  od;
+   return reverse(lattice);
+end;;
+
+
+  
+  
+  
