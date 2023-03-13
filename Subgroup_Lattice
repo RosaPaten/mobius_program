@@ -1,0 +1,16 @@
+sub_lattice:=function(max_sub,lattice)
+  local list,i;
+  if Size(max_sub[1])=1 then
+    return lattice;
+  fi;
+  for i in max_sub do
+    list:=[];
+    Add(list,i);
+    Add(list,MaximalSubgroups(i));
+    Add(lattice,list);
+    return sub_lattice(MaximalSubgroups(i),lattice);
+  od;
+end;;
+  
+  
+  
