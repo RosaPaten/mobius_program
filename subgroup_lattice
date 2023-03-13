@@ -8,6 +8,15 @@ reverse:=function(list)
   return list_new;
 end;;
 
+dup:=function(list)
+  local l_new,i;
+  l_new:=[];
+  for i in list do
+    Add(l_new,i);
+  od;
+  return l_new;
+end;;
+
 sub_lattice:=function(G)
   local list,i,subgroups,lattice;
   lattice:=[];
@@ -15,28 +24,34 @@ sub_lattice:=function(G)
   for i in subgroups do
     list:=[];
     Add(list,i);
-    Add(list,MaximalSubgroups(i));
+    Add(list,dup(MaximalSubgroups(i)));
     Add(lattice,list);
   od;
    return reverse(lattice);
 end;;
 
-simplify:=function(list)
-  local i,dictionary,G,count,j;
-  count:=1;
+
+
+simplify:=function(G)
+  local i,dictionary,count,j,subgroups,lattice;
   dictionary:=NewDictionary(1,true);
-  for i in list do
-    G:=list[i][1];
-    if KnowsDictionary(dictionary,G) then
-      list[i][1]=LookupDictionary(dictionary,G);
-    else
-      list[i][1]=[count,Size(G)];
-      AddDictionary(dictionary,
-    fi;
-    for j in list[i][2] do
-      G:=list[i][2][j];
-      if KnowsDictionary(dictionary,G) then
-      list[i][1]=LookupDictionary(dictionary,G);
+  subgroups:=sub(G);
+  count:=Size(subgroups);
+  lattice:=sub_lattice(G);
+  for i in subgroups do
+    AddDictionary(dictionary,i,[count,Size(i)]);
+    count:=count-1;
+  od;
+  for i in [1..Size(subgroups)] do
+    G:=lattice[i][1];
+    lattice[i][1]:=LookupDictionary(dictionary,G);
+    for j in [1..Size(lattice[i][2])] do
+      G:=lattice[i][2][j];
+      lattice[i][2][j]:=LookupDictionary(dictionary,G);
+    od;
+  od;
+  return lattice;
+end;;
       
       
     
