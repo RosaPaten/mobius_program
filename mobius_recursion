@@ -1,0 +1,31 @@
+#computes the conjugacy classes of G
+c:=function(n,G)
+	local cc;
+  cc:=ConjugacyClassesSubgroups(G);
+  return ConjugateSubgroups(G,Representative(cc[n]));
+end;;
+  
+#computes the subgroups of G
+sub:=function(G)
+  local list,i,cc;
+  list:=[ ];
+  i:=1;
+  cc:=Size(ConjugacyClassesSubgroups(G));
+  while i<cc do
+    Append(list, c(i,G));
+    i:=i+1;
+  od;
+  return list;
+end;;
+		
+#computes the mobius function of G recursively
+mobius:=function(G)
+  local subG,i;
+  subG:=sub(G);
+  if Size(G)=1 then
+    return 1;
+  else
+    i:=-1*(Sum(List(subG,mobius)));
+    return i;
+  fi;
+end;;
